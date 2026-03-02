@@ -1,14 +1,15 @@
 package server
 
 import (
-	"net/http"
+	"github.com/gin-gonic/gin"
 
 	"github.com/saswatsagarsahu/fraud-detection-system/services/event-generator/internal/handler"
 )
 
-func NewMux(eventHandler *handler.EventHandler) *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /healthz", handler.Healthz)
-	mux.HandleFunc("POST /event", eventHandler.PostEvent)
-	return mux
+func NewMux(eventHandler *handler.EventHandler) *gin.Engine {
+	router := gin.New()
+	router.Use(gin.Logger(), gin.Recovery())
+	router.GET("/healthz", handler.Healthz)
+	router.POST("/event", eventHandler.PostEvent)
+	return router
 }

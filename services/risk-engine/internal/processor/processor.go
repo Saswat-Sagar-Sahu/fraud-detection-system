@@ -85,7 +85,7 @@ func (p *RiskProcessor) Process(ctx context.Context, event model.Event, partitio
 		if err := p.alertPublisher.PublishRiskAlert(ctx, alert); err != nil {
 			return fmt.Errorf("publish risk alert event_id=%s user_id=%s: %w", event.EventID, event.UserID, err)
 		}
-	}
+	} 
 
 	if p.tracker != nil {
 		if err := p.tracker.TrackEvent(ctx, event); err != nil {
